@@ -12,13 +12,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(onTimeout: () -> Unit) {
+fun SplashScreen(navController: NavController) {
     LaunchedEffect(Unit) {
         delay(2000)
-        onTimeout()
+        navController.navigate("list") {
+            popUpTo("splash") { inclusive = true }
+        }
     }
 
     Box(

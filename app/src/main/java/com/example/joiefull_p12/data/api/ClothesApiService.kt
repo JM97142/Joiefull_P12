@@ -1,16 +1,8 @@
 package com.example.joiefull_p12.data.api
 
+import com.example.joiefull_p12.data.models.ClothesResponse
 import retrofit2.http.GET
 
-data class ClothesResponse(
-    val id: Int,
-    val picture: Map<String, String>,
-    val name: String,
-    val category: String,
-    val likes: Double,
-    val price: Float,
-    val original_price: Float
-)
 
 interface ClothesApiService {
     @GET("clothes.json")
