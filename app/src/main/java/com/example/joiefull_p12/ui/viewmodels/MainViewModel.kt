@@ -24,7 +24,7 @@ class MainViewModel @Inject constructor(
                 _products.clear()
                 _products.addAll(response.map { item ->
                     ProductModel(
-                        id = item.id.toString(),
+                        id = item.id,
                         title = item.name,
                         imageUrl = item.picture.url,
                         description = item.picture.description,

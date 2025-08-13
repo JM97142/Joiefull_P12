@@ -1,7 +1,7 @@
 package com.example.joiefull_p12.data.models
 
 data class ProductModel(
-    val id: String,
+    val id: Int,
     val title: String,
     val price: Double,
     val oldPrice: Double?,
