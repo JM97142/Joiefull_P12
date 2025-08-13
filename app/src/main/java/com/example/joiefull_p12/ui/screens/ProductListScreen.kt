@@ -24,8 +24,19 @@ import com.bumptech.glide.integration.compose.GlideImage
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ProductListScreen(products: List<ProductModel>, navController: NavController) {
+    // Définir ordre des catégories
+    val productCategorie = listOf("Tops", "Bottoms", "Accessories", "Shoes")
+
+    // Grouper les produits par catégorie
+    val grouped = products.groupBy { it.category }
+
+    // Trier selon ordre défini
+    val orderedGrouped = productCategorie.mapNotNull { category ->
+        grouped[category]?.let { items -> category to items }
+    } + grouped.filterKeys { it !in productCategorie }.toList()
+
     LazyColumn(modifier = Modifier.fillMaxSize()) {
-        products.groupBy { it.category }.forEach { (category, items) ->
+        orderedGrouped.forEach { (category, items) ->
             item {
                 Text(
                     text = category,
