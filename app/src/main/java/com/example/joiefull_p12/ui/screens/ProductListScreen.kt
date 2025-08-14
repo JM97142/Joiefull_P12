@@ -1,5 +1,6 @@
 package com.example.joiefull_p12.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,10 +24,19 @@ import com.bumptech.glide.integration.compose.GlideImage
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun ProductListScreen(products: List<ProductModel>, navController: NavController) {
+fun ProductListScreen(
+    products: List<ProductModel>,
+    navController: NavController
+) {
     // Définir ordre des catégories
     val productCategorie = listOf("Tops", "Bottoms", "Accessories", "Shoes")
 
+    val nomAfficheCategorie = mapOf(
+        "Tops" to "Hauts",
+        "Bottoms" to "Bas",
+        "Accessories" to "Accessoires",
+        "Shoes" to "Chaussures"
+    )
     // Grouper les produits par catégorie
     val grouped = products.groupBy { it.category }
 
@@ -39,7 +49,7 @@ fun ProductListScreen(products: List<ProductModel>, navController: NavController
         orderedGrouped.forEach { (category, items) ->
             item {
                 Text(
-                    text = category,
+                    text = nomAfficheCategorie[category] ?: category,
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(8.dp)
                 )
@@ -50,7 +60,10 @@ fun ProductListScreen(products: List<ProductModel>, navController: NavController
                         Card(
                             modifier = Modifier
                                 .padding(8.dp)
-                                .width(150.dp),
+                                .width(150.dp)
+                                .clickable {
+                                    navController.navigate("detail/${product.id}")
+                                },
                             elevation = CardDefaults.cardElevation(4.dp)
                         ) {
                             GlideImage(
