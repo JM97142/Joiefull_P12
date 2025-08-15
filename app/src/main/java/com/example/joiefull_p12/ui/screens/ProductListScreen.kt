@@ -27,13 +27,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextDecoration
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.example.joiefull_p12.ui.components.ProductCard
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
@@ -58,87 +60,23 @@ fun ProductListScreen(
         grouped[category]?.let { items -> category to items }
     } + grouped.filterKeys { it !in productCategorie }.toList()
 
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 20.dp)) {
         orderedGrouped.forEach { (category, items) ->
             item {
                 Text(
                     text = nomAfficheCategorie[category] ?: category,
                     style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier.padding(16.dp)
                 )
             }
             item {
                 LazyRow {
                     items(items) { product ->
-                        Card(
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .width(198.dp)
-                                .clickable {
-                                    navController.navigate("detail/${product.id}")
-                                },
-                            elevation = CardDefaults.cardElevation(4.dp)
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .height(198.dp)
-                                    .fillMaxWidth()
-                                    .background(
-                                        color = Color.White,
-                                        shape = RoundedCornerShape(80)
-                                    )
-                            ) {
-                                GlideImage(
-                                    model = product.imageUrl,
-                                    contentDescription = product.description,
-                                    contentScale = ContentScale.Crop
-                                )
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier
-                                        .align(Alignment.BottomEnd)
-                                        .padding(8.dp)
-                                        .background(
-                                            color = Color.White,
-                                            shape = RoundedCornerShape(50)
-                                        )
-                                        .padding(horizontal = 8.dp, vertical = 4.dp)
-                                    ) {
-                                    Icon(
-                                        imageVector = Icons.Default.FavoriteBorder,
-                                        contentDescription = "Likes",
-                                        tint = Color.Black,
-                                        modifier = Modifier.size(16.dp)
-                                    )
-                                    Text(
-                                        text = product.rating.toString(),
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = Color.Black
-                                    )
-                                }
-                            }
-                            Text(
-                                text = product.title,
-                                style = MaterialTheme.typography.titleMedium,
-                                modifier = Modifier.padding(8.dp)
-                            )
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(8.dp),
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-                                Text(
-                                    text = "${ product.price }€",
-                                    style = MaterialTheme.typography.titleSmall
-                                )
-                                Text(
-                                    text = "${ product.oldPrice }€",
-                                    style = MaterialTheme.typography.titleSmall.copy(
-                                        textDecoration = TextDecoration.LineThrough
-                                    )
-                                )
-                            }
+                        ProductCard(product = product) {
+                            navController.navigate("detail/${product.id}")
                         }
                     }
                 }
