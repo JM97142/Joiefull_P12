@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.joiefull_p12.data.models.ProductModel
 import com.example.joiefull_p12.ui.components.ProductImageHeader
+import com.example.joiefull_p12.ui.components.ProductTitleRating
 
 @Composable
 fun ProductDetailScreen(
@@ -22,6 +23,9 @@ fun ProductDetailScreen(
     ) {
         // Image principale avec boutons overlay
         ProductImageHeader(product, navController)
+        Spacer(modifier = Modifier.height(16.dp))
+        // Titre + note
+        ProductTitleRating(product)
     }
 }
 
