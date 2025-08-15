@@ -1,45 +1,46 @@
 package com.example.joiefull_p12.ui.screens
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
+import androidx.navigation.compose.rememberNavController
 import com.example.joiefull_p12.data.models.ProductModel
+import com.example.joiefull_p12.ui.components.ProductImageHeader
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ProductDetailScreen(
-    productModel: ProductModel,
+    product: ProductModel,
     navController: NavController
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(16.dp)
     ) {
-        GlideImage(
-            model = productModel.imageUrl,
-            contentDescription = productModel.title,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(430.dp)
-                .padding(vertical = 16.dp)
-        )
-        Button(
-            onClick = {
-                navController.popBackStack()
-            }) {
-            Text("Back")
-        }
+        // Image principale avec boutons overlay
+        ProductImageHeader(product, navController)
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewProductDetailScreen() {
+    val fakeProduct = ProductModel(
+        id = 1,
+        title = "Pull torsadé",
+        price = 69.0,
+        oldPrice = 95.0,
+        description = "Pull vert forêt à motif torsadé élégant, tricot finement travaillé avec manches bouffantes et col montant; doux et chaleureux.",
+        imageUrl = "",
+        rating = 4.6f,
+        category = "Tops"
+    )
+
+    ProductDetailScreen(
+        product = fakeProduct,
+        navController = rememberNavController()
+    )
 }

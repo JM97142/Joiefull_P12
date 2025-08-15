@@ -51,7 +51,7 @@ fun ProductCard(
                     .fillMaxSize()
                     .clip(RoundedCornerShape(16.dp))
             )
-            
+            // Likes
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
@@ -76,7 +76,7 @@ fun ProductCard(
                 )
             }
         }
-
+        // Title et rate
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -94,7 +94,7 @@ fun ProductCard(
                 modifier = Modifier.size(16.dp)
             )
         }
-
+        // Prices
         Row(
             modifier = Modifier
                 .fillMaxWidth()
