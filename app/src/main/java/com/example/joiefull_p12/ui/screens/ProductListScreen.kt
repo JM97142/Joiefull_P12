@@ -7,17 +7,15 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import com.example.joiefull_p12.data.models.ProductModel
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.lazy.items
 import com.example.joiefull_p12.ui.components.ProductCard
 
 @Composable
 fun ProductListScreen(
     products: List<ProductModel>,
-    navController: NavController
+    onProductClick: (ProductModel) -> Unit
 ) {
     // Définir ordre des catégories
     val productCategorie = listOf("Tops", "Bottoms", "Accessories", "Shoes")
@@ -50,9 +48,10 @@ fun ProductListScreen(
             }
             item {
                 LazyRow {
-                    items(items) { product ->
+                    items(items.size) { index ->
+                        val product = items[index]
                         ProductCard(product = product) {
-                            navController.navigate("detail/${product.id}")
+                            onProductClick(product)
                         }
                     }
                 }
