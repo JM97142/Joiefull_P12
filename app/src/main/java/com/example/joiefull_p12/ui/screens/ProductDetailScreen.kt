@@ -34,6 +34,7 @@ fun ProductDetailScreen(
         Spacer(modifier = Modifier.height(16.dp))
         // Titre + note
         ProductTitleRating(product)
+        // Prix
         ProductPrice(product)
         Spacer(modifier = Modifier.height(12.dp))
         // Description
@@ -61,7 +62,7 @@ fun PreviewProductDetailScreen() {
         oldPrice = 95.0,
         description = "Pull vert forêt à motif torsadé élégant, tricot finement travaillé avec manches bouffantes et col montant; doux et chaleureux.",
         imageUrl = "",
-        rating = 4.6f,
+        likes = 46,
         category = "Tops"
     )
 

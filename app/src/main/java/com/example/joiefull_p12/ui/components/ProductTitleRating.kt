@@ -26,7 +26,7 @@ fun ProductTitleRating(product: ProductModel) {
         modifier = Modifier
             .fillMaxWidth()
             .semantics {
-                contentDescription = "${product.title} avec une note de ${product.rating}"
+                contentDescription = "${product.title} avec une note de ${product.likes}"
             },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
@@ -46,7 +46,7 @@ fun ProductTitleRating(product: ProductModel) {
                 tint = Color(0xFFFF9800)
             )
             Text(
-                product.rating.toString(),
+                product.likes.toString(),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium
             )

@@ -3,6 +3,7 @@ package com.example.joiefull_p12.ui.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
@@ -21,24 +22,26 @@ import com.example.joiefull_p12.data.models.ProductModel
 @Composable
 fun ProductPrice(product: ProductModel) {
     Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
+            .fillMaxWidth()
             .padding(top = 4.dp)
             .semantics {
                 contentDescription = "Prix actuel : ${product.price}. Ancien prix : ${product.oldPrice}"
-            }
+            },
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
             "${product.price}€",
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
-        Text(
-            "${product.oldPrice}€",
-            fontSize = 16.sp,
-            color = Color.Gray,
-            textDecoration = TextDecoration.LineThrough
-        )
+        product.oldPrice?.let { oldPrice ->
+            Text(
+                "$oldPrice€",
+                fontSize = 16.sp,
+                color = Color.Gray,
+                textDecoration = TextDecoration.LineThrough
+            )
+        }
     }
 }

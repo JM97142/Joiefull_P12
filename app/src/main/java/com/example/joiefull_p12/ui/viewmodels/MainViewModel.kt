@@ -31,7 +31,7 @@ class MainViewModel @Inject constructor(
                         category = item.category.lowercase().replaceFirstChar { it.uppercase() },
                         price = item.price,
                         oldPrice = if (item.originalPrice > item.price) item.originalPrice else null,
-                        rating = item.likes.toFloat()
+                        likes = item.likes
                     )
                 })
             } catch (e: Exception) {

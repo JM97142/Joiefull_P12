@@ -42,7 +42,7 @@ fun ProductCard(
                     "${product.title}, " +
                             "Prix ${product.price} euros. " +
                             "Ancien prix ${product.oldPrice} euros. " +
-                            "Note ${product.rating}."
+                            "Note ${product.likes}."
             },
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
@@ -52,6 +52,7 @@ fun ProductCard(
                 .fillMaxWidth()
                 .background(Color.White)
         ) {
+            // Image du produit
             GlideImage(
                 model = product.imageUrl,
                 contentDescription = "Image du produit ${ product.title }",
@@ -79,7 +80,7 @@ fun ProductCard(
                     modifier = Modifier.size(16.dp)
                 )
                 Text(
-                    text = product.rating.toString(),
+                    text = "${product.likes}",
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.Black
                 )
@@ -96,12 +97,19 @@ fun ProductCard(
                 text = product.title,
                 style = MaterialTheme.typography.titleMedium
             )
-            Icon(
-                imageVector = Icons.Default.Star,
-                contentDescription = "Évaluation",
-                tint = Color(0xFFFFA94A),
-                modifier = Modifier.size(16.dp)
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    imageVector = Icons.Default.Star,
+                    contentDescription = "Évaluation",
+                    tint = Color(0xFFFFA94A),
+                    modifier = Modifier.size(16.dp)
+                )
+                Text(
+                    text = product.likes.toString(),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color.Black
+                )
+            }
         }
         // Prices
         Row(
@@ -114,13 +122,14 @@ fun ProductCard(
                 text = "${product.price}€",
                 style = MaterialTheme.typography.titleSmall
             )
-            Text(
-                text = "${product.oldPrice}€",
-                style = MaterialTheme.typography.titleSmall.copy(
-                    textDecoration = TextDecoration.LineThrough
-                ),
-                color = Color.Gray
-            )
+            product.oldPrice?.let { oldPrice ->
+                Text(
+                    text = "$oldPrice€",
+                    style = MaterialTheme.typography.titleSmall.copy(
+                        textDecoration = TextDecoration.LineThrough
+                    ),
+                    color = Color.Gray
+                ) }
         }
     }
 }

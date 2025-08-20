@@ -1,5 +1,6 @@
 package com.example.joiefull_p12.ui.components
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
@@ -39,6 +41,8 @@ fun ProductImageHeader(
     product: ProductModel,
     navController: NavController
 ) {
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -77,7 +81,18 @@ fun ProductImageHeader(
 
         // Bouton partage
         IconButton(
-            onClick = { /* Action share */ },
+            onClick = {
+                val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(
+                        Intent.EXTRA_TEXT,
+                        "Découvrez ce produit : ${product.title} à ${product.price}€. 🔗 ${product.imageUrl}"
+                    )
+                }
+                context.startActivity(
+                    Intent.createChooser(shareIntent, "Partager via")
+                )
+            },
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(8.dp)
@@ -102,7 +117,7 @@ fun ProductImageHeader(
                 .background(Color.White, RoundedCornerShape(50))
                 .padding(horizontal = 10.dp, vertical = 6.dp)
                 .semantics {
-                    contentDescription = "Ce produit a une note de ${product.rating}"
+                    contentDescription = "Ce produit a une note de ${product.likes}"
                 }
         ) {
             Icon(
@@ -111,7 +126,10 @@ fun ProductImageHeader(
                 tint = Color.Black
             )
             Spacer(modifier = Modifier.width(4.dp))
-            Text(text = product.rating.toString(), fontSize = 14.sp)
+            Text(
+                text = product.likes.toString(),
+                fontSize = 14.sp
+            )
         }
     }
 }

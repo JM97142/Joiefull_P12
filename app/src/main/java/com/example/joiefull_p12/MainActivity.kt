@@ -53,9 +53,11 @@ fun JoiefullApp() {
                 SplashScreen(navController)
             }
             composable("list") {
+                // Tablet navigation
                 if (isTablet) {
-                    // Tablet navigation
-                    var selectedProduct by remember { mutableStateOf(vm.products.firstOrNull()) }
+                    var selectedProduct by remember {
+                        mutableStateOf(vm.products.find { it.id == 3 } ?: vm.products.firstOrNull())
+                    }
 
                     Row(Modifier.fillMaxSize()) {
                         androidx.compose.foundation.layout.Box(Modifier.weight(1f)) {
@@ -113,7 +115,7 @@ fun PreviewProductDetailMobile() {
         oldPrice = 29.99,
         imageUrl = "https://via.placeholder.com/400",
         category = "Tops",
-        rating = 4.5f
+        likes = 45
     )
     ProductDetailScreen(
         product = fakeProduct,
@@ -132,7 +134,7 @@ fun PreviewProductDetailTablet() {
         oldPrice = 29.99,
         imageUrl = "https://via.placeholder.com/400",
         category = "Tops",
-        rating = 4.5f
+        likes = 43
     )
     ProductDetailScreen(
         product = fakeProduct,

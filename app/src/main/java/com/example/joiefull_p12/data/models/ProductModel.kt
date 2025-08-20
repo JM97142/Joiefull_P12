@@ -5,7 +5,7 @@ data class ProductModel(
     val title: String,
     val price: Double,
     val oldPrice: Double?,
-    val rating: Float,
+    val likes: Int,
     val imageUrl: String,
     val description: String,
     val category: String
