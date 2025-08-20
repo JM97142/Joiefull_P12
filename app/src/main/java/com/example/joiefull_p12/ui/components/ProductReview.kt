@@ -22,7 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -35,7 +34,7 @@ fun ProductReview() {
             model = "https://randomuser.me/api/portraits/women/44.jpg", // Avatar fictif
             contentDescription = "Photo de profil utilisateur",
             modifier = Modifier
-                .size(36.dp)
+                .size(40.dp)
                 .clip(CircleShape)
         )
 
@@ -48,10 +47,10 @@ fun ProductReview() {
                 val starNumber = index + 1
                 Icon(
                     Icons.Default.Star,
-                    contentDescription = "$starNumber étoile sélectionnée",
+                    contentDescription = "$starNumber étoile",
                     tint = if (index < selectedStars) Color(0xFFFF9800) else Color.Gray,
                     modifier = Modifier
-                        .size(28.dp)
+                        .size(48.dp)
                         .clickable { selectedStars = index + 1 }
                 )
             }
@@ -64,7 +63,12 @@ fun ProductReview() {
     OutlinedTextField(
         value = "",
         onValueChange = { /* gestion saisie */ },
-        placeholder = { Text("Partagez ici vos impressions sur cette pièce") },
+        placeholder = {
+            Text(
+                "Partagez ici vos impressions sur cette pièce",
+                color = Color(0xFF555555)
+            )
+        },
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp)

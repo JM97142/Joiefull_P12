@@ -51,23 +51,3 @@ fun ProductDetailScreen(
         ProductReview()
     }
 }
-
-@Preview(showBackground = true, apiLevel = 34)
-@Composable
-fun PreviewProductDetailScreen() {
-    val fakeProduct = ProductModel(
-        id = 1,
-        title = "Pull torsadé",
-        price = 69.0,
-        oldPrice = 95.0,
-        description = "Pull vert forêt à motif torsadé élégant, tricot finement travaillé avec manches bouffantes et col montant; doux et chaleureux.",
-        imageUrl = "",
-        likes = 46,
-        category = "Tops"
-    )
-
-    ProductDetailScreen(
-        product = fakeProduct,
-        navController = rememberNavController()
-    )
-}

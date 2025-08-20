@@ -128,7 +128,7 @@ fun ProductCard(
                     style = MaterialTheme.typography.titleSmall.copy(
                         textDecoration = TextDecoration.LineThrough
                     ),
-                    color = Color.Gray
+                    color = Color(0xFF555555)
                 ) }
         }
     }
