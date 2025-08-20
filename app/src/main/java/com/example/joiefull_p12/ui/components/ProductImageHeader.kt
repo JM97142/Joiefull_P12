@@ -24,6 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -34,7 +36,7 @@ import com.example.joiefull_p12.data.models.ProductModel
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ProductImageHeader(
-    productModel: ProductModel,
+    product: ProductModel,
     navController: NavController
 ) {
     Box(
@@ -42,12 +44,17 @@ fun ProductImageHeader(
             .fillMaxWidth()
             .height(430.dp)
             .clip(RoundedCornerShape(20.dp))
+            .semantics(mergeDescendants = true) {  }
     ) {
         GlideImage(
-            model = productModel.imageUrl,
-            contentDescription = productModel.title,
+            model = product.imageUrl,
+            contentDescription = product.title,
             contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .semantics {
+                    this.contentDescription = "Image du produit ${product.title}"
+                }
         )
 
         // Bouton retour
@@ -57,6 +64,9 @@ fun ProductImageHeader(
                 .align(Alignment.TopStart)
                 .padding(8.dp)
                 .size(36.dp)
+                .semantics {
+                    contentDescription = "Retour à la liste de produits"
+                }
         ) {
             Icon(
                 Icons.Default.ArrowBack,
@@ -72,6 +82,9 @@ fun ProductImageHeader(
                 .align(Alignment.TopEnd)
                 .padding(8.dp)
                 .size(36.dp)
+                .semantics {
+                    contentDescription = "Partager le produit ${product.title}"
+                }
         ) {
             Icon(
                 Icons.Default.Share,
@@ -88,6 +101,9 @@ fun ProductImageHeader(
                 .padding(8.dp)
                 .background(Color.White, RoundedCornerShape(50))
                 .padding(horizontal = 10.dp, vertical = 6.dp)
+                .semantics {
+                    contentDescription = "Ce produit a une note de ${product.rating}"
+                }
         ) {
             Icon(
                 imageVector = Icons.Default.FavoriteBorder,
@@ -95,7 +111,7 @@ fun ProductImageHeader(
                 tint = Color.Black
             )
             Spacer(modifier = Modifier.width(4.dp))
-            Text(text = productModel.rating.toString(), fontSize = 14.sp)
+            Text(text = product.rating.toString(), fontSize = 14.sp)
         }
     }
 }

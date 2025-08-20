@@ -48,34 +48,37 @@ fun JoiefullApp() {
     val isTablet = androidx.compose.ui.platform.LocalConfiguration.current.screenWidthDp > 600
 
     MaterialTheme {
-        if (isTablet) {
-            // Tablet navigation
-            var selectedProduct by remember { mutableStateOf(vm.products.firstOrNull()) }
-
-            Row(Modifier.fillMaxSize()) {
-                androidx.compose.foundation.layout.Box(Modifier.weight(1f)) {
-                    ProductListScreen(
-                        products = vm.products,
-                        onProductClick = { product ->
-                            selectedProduct = product
-                        }
-                    )
-                }
-
-                // DÉTAIL
-                androidx.compose.foundation.layout.Box(Modifier.weight(1f)) {
-                    selectedProduct?.let { product ->
-                        ProductDetailScreen(product = product, navController = navController)
-                    }
-                }
+        NavHost(navController, startDestination = "splash") {
+            composable("splash") {
+                SplashScreen(navController)
             }
-        } else {
-            // Mobile navigation
-            NavHost(navController, startDestination = "splash") {
-                composable("splash") {
-                    SplashScreen(navController)
-                }
-                composable("list") {
+            composable("list") {
+                if (isTablet) {
+                    // Tablet navigation
+                    var selectedProduct by remember { mutableStateOf(vm.products.firstOrNull()) }
+
+                    Row(Modifier.fillMaxSize()) {
+                        androidx.compose.foundation.layout.Box(Modifier.weight(1f)) {
+                            ProductListScreen(
+                                products = vm.products,
+                                onProductClick = { product ->
+                                    selectedProduct = product
+                                }
+                            )
+                        }
+
+                        // DÉTAIL
+                        androidx.compose.foundation.layout.Box(Modifier.weight(1f)) {
+                            selectedProduct?.let { product ->
+                                ProductDetailScreen(
+                                    product = product,
+                                    navController = navController
+                                )
+                            }
+                        }
+                    }
+                } else {
+                    // Mobile navigation
                     ProductListScreen(
                         products = vm.products,
                         onProductClick = { product ->
@@ -83,15 +86,15 @@ fun JoiefullApp() {
                         }
                     )
                 }
-                composable(
-                    "detail/{productId}",
-                    arguments = listOf(navArgument("productId") { type = NavType.StringType })
-                ) { backStackEntry ->
-                    val id = backStackEntry.arguments?.getString("productId")?.toIntOrNull()
-                    val product = vm.products.find { it.id == id }
-                    product?.let {
-                        ProductDetailScreen(product = it, navController = navController)
-                    }
+            }
+            composable(
+                "detail/{productId}",
+                arguments = listOf(navArgument("productId") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val id = backStackEntry.arguments?.getString("productId")?.toIntOrNull()
+                val product = vm.products.find { it.id == id }
+                product?.let {
+                    ProductDetailScreen(product = it, navController = navController)
                 }
             }
         }
@@ -99,7 +102,7 @@ fun JoiefullApp() {
 }
 
 
-@Preview(name = "Mobile", showBackground = true, widthDp = 360, heightDp = 800)
+@Preview(name = "Mobile", showBackground = true, widthDp = 360, heightDp = 800, apiLevel = 34)
 @Composable
 fun PreviewProductDetailMobile() {
     val fakeProduct = ProductModel(
@@ -118,7 +121,7 @@ fun PreviewProductDetailMobile() {
     )
 }
 
-@Preview(name = "Tablette", showBackground = true, widthDp = 800, heightDp = 1280)
+@Preview(name = "Tablette", showBackground = true, widthDp = 1280, heightDp = 800, apiLevel = 34)
 @Composable
 fun PreviewProductDetailTablet() {
     val fakeProduct = ProductModel(

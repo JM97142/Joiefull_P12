@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -32,7 +33,7 @@ fun ProductReview() {
     Row(verticalAlignment = Alignment.CenterVertically) {
         GlideImage(
             model = "https://randomuser.me/api/portraits/women/44.jpg", // Avatar fictif
-            contentDescription = "Avatar",
+            contentDescription = "Photo de profil utilisateur",
             modifier = Modifier
                 .size(36.dp)
                 .clip(CircleShape)
@@ -44,9 +45,10 @@ fun ProductReview() {
 
         Row {
             repeat(5) { index ->
+                val starNumber = index + 1
                 Icon(
                     Icons.Default.Star,
-                    contentDescription = null,
+                    contentDescription = "$starNumber étoile sélectionnée",
                     tint = if (index < selectedStars) Color(0xFFFF9800) else Color.Gray,
                     modifier = Modifier
                         .size(28.dp)

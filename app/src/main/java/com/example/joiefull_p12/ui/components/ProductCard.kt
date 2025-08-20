@@ -18,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -34,7 +36,14 @@ fun ProductCard(
         modifier = Modifier
             .padding(horizontal = 8.dp)
             .width(198.dp)
-            .clickable { onClick() },
+            .clickable { onClick() }
+            .semantics(mergeDescendants = true) {
+                contentDescription =
+                    "${product.title}, " +
+                            "Prix ${product.price} euros. " +
+                            "Ancien prix ${product.oldPrice} euros. " +
+                            "Note ${product.rating}."
+            },
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Box(
@@ -45,7 +54,7 @@ fun ProductCard(
         ) {
             GlideImage(
                 model = product.imageUrl,
-                contentDescription = product.description,
+                contentDescription = "Image du produit ${ product.title }",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxSize()
@@ -65,7 +74,7 @@ fun ProductCard(
             ) {
                 Icon(
                     imageVector = Icons.Default.FavoriteBorder,
-                    contentDescription = "Likes",
+                    contentDescription = "Nombre de likes",
                     tint = Color.Black,
                     modifier = Modifier.size(16.dp)
                 )
@@ -89,7 +98,7 @@ fun ProductCard(
             )
             Icon(
                 imageVector = Icons.Default.Star,
-                contentDescription = "Rating",
+                contentDescription = "Évaluation",
                 tint = Color(0xFFFFA94A),
                 modifier = Modifier.size(16.dp)
             )

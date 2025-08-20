@@ -5,6 +5,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,6 +27,7 @@ fun ProductDetailScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
+            .padding(top = 16.dp)
     ) {
         // Image principale avec boutons overlay
         ProductImageHeader(product, navController)
@@ -37,7 +40,10 @@ fun ProductDetailScreen(
         Text(
             text = product.description,
             fontSize = 14.sp,
-            color = Color.DarkGray
+            color = Color.DarkGray,
+            modifier = Modifier.semantics {
+                contentDescription = "Description du produit : ${product.description}"
+            }
         )
         Spacer(modifier = Modifier.height(20.dp))
         // User review
@@ -45,7 +51,7 @@ fun ProductDetailScreen(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, apiLevel = 34)
 @Composable
 fun PreviewProductDetailScreen() {
     val fakeProduct = ProductModel(
