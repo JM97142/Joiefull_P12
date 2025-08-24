@@ -47,6 +47,7 @@ fun JoiefullApp() {
 
     MaterialTheme {
         NavHost(navController, startDestination = "splash") {
+            // Écran de démarrage
             composable("splash") {
                 SplashScreen(navController)
             }
@@ -58,6 +59,7 @@ fun JoiefullApp() {
                     }
 
                     Row(Modifier.fillMaxSize()) {
+                        // Liste des produits (colonne gauche)
                         androidx.compose.foundation.layout.Box(Modifier.weight(1f)) {
                             ProductListScreen(
                                 products = vm.products,
@@ -67,7 +69,7 @@ fun JoiefullApp() {
                             )
                         }
 
-                        // DÉTAIL
+                        // Détail produit (colonne droite)
                         androidx.compose.foundation.layout.Box(Modifier.weight(1f)) {
                             selectedProduct?.let { product ->
                                 ProductDetailScreen(
@@ -90,7 +92,8 @@ fun JoiefullApp() {
             composable(
                 "detail/{productId}",
                 arguments = listOf(navArgument("productId") { type = NavType.StringType })
-            ) { backStackEntry ->
+            ) {
+                backStackEntry ->
                 val id = backStackEntry.arguments?.getString("productId")?.toIntOrNull()
                 val product = vm.products.find { it.id == id }
                 product?.let {
